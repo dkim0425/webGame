@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 247e341d0bbbbb7409433d453f8d2359
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - playerCastle: {fileID: 8486610951892050545, guid: f2f7ade12442eed4cbad17e2296b5c08, type: 3}
+  - enemyCastle: {fileID: 233930918151765292, guid: 41131cea065c87f4991219be10215b6d, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
