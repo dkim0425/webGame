@@ -1,45 +1,28 @@
 from fastapi import FastAPI, WebSocket
-from typing import List
-import asyncio
-import aioredis
+from fastapi.middleware.cors import CORSMiddleware
 
-app=FastAPI
-clients=List[WebSocket]=[]
+app = FastAPI()
 
-# Redis 설정
-REDIS_URL="redis://localhost:6379"
-redis=None
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # 테스트용
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
-#서버가 시작될때 한번만 실행할 함수
-@app.on_event("startup")
-async def startup_event():
-    global redis 
-    redis= await aioredis.from_url(REDIS_URL,decode_responses=True)
-    asyncio.create_task(redis_subscribe())
-    
-
-
-# WebSocket 연결 엔드포인트
-@app.websocket("/ws")
+@app.websocket("/ws/chat")
 async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
-    clients.append(websocket)
-    try:
-        while True:
-            data = await websocket.receive_text()
-            # 받은 메시지를 Redis 채널로 발행
-            await redis.publish("game_channel", data)
-    except Exception:
-        clients.remove(websocket)
+    print("클라이언트 연결됨")
 
-# Redis 구독 & 브로드캐스트
-async def redis_subscribe():
-    pubsub = redis.pubsub()
-    await pubsub.subscribe("game_channel")
-    async for message in pubsub.listen():
-        if message['type'] == 'message':
-            for client in clients:
-                try:
-                    await client.send_text(message['data'])
-                except:
-                    clients.remove(client)
+    await websocket.send_text("안녕 난 서버")
+
+    while True:
+        try:
+            data = await websocket.receive_text()
+            print(f"Unity로부터 받은 메시지: {data}")
+            await websocket.send_text(f"서버가 받음: {data}")
+        except:
+            print("클라이언트 연결 종료")
+            break
