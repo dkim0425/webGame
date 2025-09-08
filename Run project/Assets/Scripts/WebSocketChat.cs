@@ -1,32 +1,73 @@
+
+
 using UnityEngine;
 using WebSocketSharp;
+using System.Collections.Generic;
+
+[System.Serializable]
+public class PlayerData
+{
+    public string id;
+    public float x, y, z;
+}
+
+[System.Serializable]
+public class ReceivedData
+{
+    public string from;
+    public PlayerData data;
+}
 
 public class WebSocketChat : MonoBehaviour
 {
     WebSocket ws;
-    public Transform PlayerPos;
+    public Transform PlayerTransform;
+    public string playerId = "player1"; // ê° í´ë¼ì´ì–¸íŠ¸ ê³ ìœ  ID
+    public GameObject PlayerPrefab;      // ë‹¤ë¥¸ í”Œë ˆì´ì–´ ì˜¤ë¸Œì íŠ¸
+    private Dictionary<string, GameObject> otherPlayers = new Dictionary<string, GameObject>();
+
     void Start()
     {
-        Debug.Log("Start ½ÇÇàµÊ");
-
         ws = new WebSocket("ws://13.238.197.137:8000/ws/chat");
 
-        // ¼­¹ö·ÎºÎÅÍ ¸Ş½ÃÁö ¼ö½Å ½Ã
+
         ws.OnMessage += (sender, e) =>
         {
-            Debug.Log("¼­¹ö·ÎºÎÅÍ ¹ŞÀº ¸Ş½ÃÁö: " + e.Data);
+            ReceivedData received = JsonUtility.FromJson<ReceivedData>(e.Data);
+            Debug.Log(received.from + " ë¡œë¶€í„° ë°›ì€ ì¢Œí‘œ: " +
+                      received.data.x + "," +
+                      received.data.y + "," +
+                      received.data.z);
+
+            // ë‹¤ë¥¸ í”Œë ˆì´ì–´ ìƒì„±/ì´ë™
+            if (!otherPlayers.ContainsKey(received.from))
+            {
+                GameObject newPlayer = Instantiate(PlayerPrefab);
+                otherPlayers[received.from] = newPlayer;
+            }
+            otherPlayers[received.from].transform.position =
+                new Vector3(received.data.x, received.data.y, received.data.z);
         };
 
         ws.Connect();
-
-        // ¼­¹ö·Î ¸Ş½ÃÁö Àü¼Û
-        ws.Send("¾È³ç ³­ À¯´ÏÆ¼");
     }
 
     void Update()
     {
-        ws.Send("" + PlayerPos.position);
+        if (ws.ReadyState == WebSocketState.Open)
+        {
+            PlayerData myData = new PlayerData()
+            {
+                id = playerId,
+                x = PlayerTransform.position.x,
+                y = PlayerTransform.position.y,
+                z = PlayerTransform.position.z
+            };
+            string json = JsonUtility.ToJson(myData);
+            ws.Send(json);
+        }
     }
+
     void OnDestroy()
     {
         if (ws != null)
