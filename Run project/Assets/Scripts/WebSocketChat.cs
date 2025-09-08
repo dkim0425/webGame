@@ -4,7 +4,7 @@ using WebSocketSharp;
 public class WebSocketChat : MonoBehaviour
 {
     WebSocket ws;
-
+    public Transform PlayerPos;
     void Start()
     {
         Debug.Log("Start ½ÇÇàµÊ");
@@ -23,6 +23,10 @@ public class WebSocketChat : MonoBehaviour
         ws.Send("¾È³ç ³­ À¯´ÏÆ¼");
     }
 
+    void Update()
+    {
+        ws.Send("" + PlayerPos.position);
+    }
     void OnDestroy()
     {
         if (ws != null)
