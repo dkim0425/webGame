@@ -5,28 +5,30 @@ public class WebSocketChat : MonoBehaviour
 {
     WebSocket ws;
     public Transform PlayerPos;
+
     void Start()
     {
-        Debug.Log("Start ½ÇÇàµÊ");
+        Debug.Log("Start ì‹¤í–‰ë¨");
 
         ws = new WebSocket("ws://13.238.197.137:8000/ws/chat");
 
-        // ¼­¹ö·ÎºÎÅÍ ¸Ş½ÃÁö ¼ö½Å ½Ã
+        // ì„œë²„ë¡œë¶€í„° ë©”ì‹œì§€ ìˆ˜ì‹  ì‹œ
         ws.OnMessage += (sender, e) =>
         {
-            Debug.Log("¼­¹ö·ÎºÎÅÍ ¹ŞÀº ¸Ş½ÃÁö: " + e.Data);
+            Debug.Log("ì„œë²„ë¡œë¶€í„° ë°›ì€ ë©”ì‹œì§€: " + e.Data);
         };
 
         ws.Connect();
 
-        // ¼­¹ö·Î ¸Ş½ÃÁö Àü¼Û
-        ws.Send("¾È³ç ³­ À¯´ÏÆ¼");
+        // ì„œë²„ë¡œ ë©”ì‹œì§€ ì „ì†¡
+        ws.Send("ì•ˆë…• ë‚œ ìœ ë‹ˆí‹°");
     }
 
     void Update()
     {
         ws.Send("" + PlayerPos.position);
     }
+
     void OnDestroy()
     {
         if (ws != null)
