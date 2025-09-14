@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 2733131237480604862}
   - component: {fileID: 4259724801942917566}
-  - component: {fileID: 4125914396057553162}
   - component: {fileID: 2976175054515219591}
   - component: {fileID: 4117002022015233969}
-  - component: {fileID: 3076521620460943218}
+  - component: {fileID: 4125914396057553162}
+  - component: {fileID: -6873291136606743950}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -88,25 +88,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &4125914396057553162
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 76985492195543965}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5516f811f39fc5479b9f3fa8c890daf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 3
-  jumpForce: 5
-  groundCheck: {fileID: 2733131237480604862}
-  checkRadius: 0.25
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 2048
 --- !u!50 &2976175054515219591
 Rigidbody2D:
   serializedVersion: 4
@@ -169,7 +150,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!114 &3076521620460943218
+--- !u!114 &4125914396057553162
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -178,9 +159,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 76985492195543965}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19625027ded227f4996de3ebf931148d, type: 3}
+  m_Script: {fileID: 11500000, guid: c5516f811f39fc5479b9f3fa8c890daf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 3
+  jumpForce: 5
+  groundCheck: {fileID: 2733131237480604862}
+  checkRadius: 0.25
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 2048
+--- !u!114 &-6873291136606743950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 76985492195543965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d43d7e822ec8334bb5dfe78f6a634d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerPos: {fileID: 2733131237480604862}
-  sendInterval: 1
   playerId: player
+  sendInterval: 1
