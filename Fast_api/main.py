@@ -36,15 +36,22 @@ async def websocket_endpoint(websocket: WebSocket):
             print(f"{player_id} 로부터 받은 좌표: {payload}")
 
             # 브로드캐스트 (자기 자신 제외)
+            # for pid, client in connected_clients.items():
+            #     if pid != player_id:
+            #         await client.send_text(json.dumps({
+            #         "from": player_id,
+            #         "x": payload["x"],
+            #         "y": payload["y"],
+            #         "z": payload["z"]
+            #     }))
             for pid, client in connected_clients.items():
-                if pid != player_id:
-                    await client.send_text(json.dumps({
-                    "from": player_id,
-                    "x": payload["x"],
-                    "y": payload["y"],
-                    "z": payload["z"]
-                }))
 
+                await client.send_text(json.dumps({
+                "from": player_id,
+                "x": payload["x"],
+                "y": payload["y"],
+                "z": payload["z"]
+            }))
     except WebSocketDisconnect:
         if player_id and player_id in connected_clients:
             del connected_clients[player_id]
