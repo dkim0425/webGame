@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4125914396057553162}
   - component: {fileID: -6873291136606743950}
   m_Layer: 0
-  m_Name: Player
+  m_Name: Red
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -78,7 +78,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847, type: 3}
-  m_Color: {r: 1, g: 0.08018869, b: 0.08018869, a: 1}
+  m_Color: {r: 1, g: 0.5235849, b: 0.5235849, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -181,6 +181,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d43d7e822ec8334bb5dfe78f6a634d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerPos: {fileID: 2733131237480604862}
-  playerId: player
+  playerTransform: {fileID: 2733131237480604862}
+  playerId: Red
   sendInterval: 1
+  serverUrl: ws://13.238.197.137:8000/ws/chat
